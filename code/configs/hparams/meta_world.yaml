@@ -1,0 +1,8 @@
+!!python/object:argparse.Namespace
+## standard
+actor_hidden_sizes: [400, 400] 
+critic_hidden_sizes: [400, 400]
+lr: 0.0003
+batch_size: 1_028
+use_auto_entropy: True
+history_length: 15

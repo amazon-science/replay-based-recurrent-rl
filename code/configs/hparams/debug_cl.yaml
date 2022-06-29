@@ -1,0 +1,28 @@
+!!python/object:argparse.Namespace
+env_name: CW10
+# env_name: Ant_direction-v3
+
+# total_updates: 1_000
+total_timesteps: 1_000
+replay_size: 500
+nb_tasks: 3
+max_episode_steps: 5
+# eval_freq: 500
+log_freq: 20
+# save_freq: 100_000
+burn_in: 20
+warm_up: 10
+num_evals: 1
+batch_size: 2
+log_id: debug
+# wandb_project: debug
+actor_hidden_sizes: [3, 5]
+# actor_hidden_sizes: [400, 400]
+critic_hidden_sizes: [3, 5]
+# critic_hidden_sizes: [400, 400]
+hiddens_context: [3, 3]
+history_length: 2
+##
+# multi_head: False 
+curr_task_sampl_prob: 0.8
+use_auto_entropy: True

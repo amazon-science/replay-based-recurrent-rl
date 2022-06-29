@@ -1,0 +1,14 @@
+!!python/object:argparse.Namespace
+env_name: CW10
+nb_tasks: 1 
+single_task_id: 9 
+max_episode_steps: 200 # https://github.com/awarelab/continual_world/blob/62bdd3ef2f7996e70a1465f8d439edca68152e6c/envs.py#L21
+total_timesteps: 1_000_000
+burn_in: 10_000
+warm_up: 1_000
+monitor_success: True
+#
+log_freq: 10_000
+eval_freq: 100_000
+save_freq: 1_000_000_000
+num_evals: 10

@@ -1,0 +1,30 @@
+!!python/object:argparse.Namespace
+env_name: Ant_direction-v3
+nb_tasks: 3
+
+total_timesteps: 200
+# total_timesteps: 10_000
+max_episode_steps: 5
+
+replay_size: 10
+eval_freq: 50
+log_freq: 20
+save_freq: 100_000
+burn_in: 20
+warm_up: 10
+num_evals: 5
+batch_size: 100
+log_id: debug
+# wandb_project: debug
+actor_hidden_sizes: [3, 5]
+# actor_hidden_sizes: [400, 400]
+critic_hidden_sizes: [3, 5]
+# critic_hidden_sizes: [400, 400]
+hiddens_context: [30, 30]
+history_length: 3
+# multi_head: False 
+curr_task_sampl_prob: 0.8
+
+# use_auto_entropy: True
+grad_clip: 1
+# task_agnostic: True

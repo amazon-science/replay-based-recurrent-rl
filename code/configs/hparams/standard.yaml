@@ -1,0 +1,9 @@
+!!python/object:argparse.Namespace
+## standard
+actor_hidden_sizes: [256, 256] 
+critic_hidden_sizes: [256, 256]
+lr: 0.001
+replay_size: 1_000_000
+batch_size: 100
+sampling_ratio: 1 #not sure about this one
+history_length: 15 #30

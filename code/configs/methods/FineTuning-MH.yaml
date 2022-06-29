@@ -1,0 +1,8 @@
+!!python/object:argparse.Namespace
+train_from_scratch: False
+experience_replay: False
+context_id: False
+context_embedding: False
+context_rnn: False
+multi_head: True
+task_agnostic: False
