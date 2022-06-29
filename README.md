@@ -182,7 +182,9 @@ This project is licensed under the Apache-2.0 License.
 
 
 ## Contact
-
+Please open an issue on [issues tracker](https://github.com/amazon-research/
+replay-based-recurrent-rl
+/issues) to report problems or to ask questions or send an email to Massimo Caccia - [@MassCaccia](https://twitter.com/MassCaccia) - massimo.p.caccia@gmail.com and  [Rasool Fakoor](https://github.com/rasoolfa).
  
 
 <p align="right">(<a href="#top">back to top</a>)</p>
