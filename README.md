@@ -104,11 +104,7 @@ conda activate tacrl
 
 2. install [Sequoia](https://github.com/lebrice/Sequoia) w/ Meta-World add-on
 ```bash
-pip install -e Sequoia[metaworld]
-```
-or if you as using zsh
-```bash
-pip install -e "Sequoia[metaworld]"
+pip install "sequoia[metaworld] @ git+https://www.github.com/lebrice/Sequoia.git"
 ```
 
 3. extra requirements
