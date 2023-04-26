@@ -104,7 +104,7 @@ conda activate tacrl
 
 2. install [Sequoia](https://github.com/lebrice/Sequoia) w/ Meta-World add-on
 ```bash
-pip install "sequoia[metaworld] @ git+https://www.github.com/lebrice/Sequoia.git"
+pip install "sequoia[metaworld] @ git+https://www.github.com/lebrice/Sequoia.git@pass_seed_to_metaworld_envs"
 ```
 
 3. extra requirements
@@ -119,7 +119,9 @@ UPDATE:
 I haven't reinstalled Mujoco since DeepMind acquisition and refactoring.
 Best of luck w/ the installation.
 
-You can follow [RoboSuite installation](https://robosuite.ai/docs/installation.html) if you stumble on some `GCC` related bugs (MacOS specific)
+You can follow [RoboSuite installation](https://robosuite.ai/docs/installation.html) if you stumble on some `GCC` related bugs (MacOS specific).
+
+For GCC / GL/glew.h related errors, you can use the instructions [here](https://github.com/openai/mujoco-py/issues/627#issuecomment-1007658905)
 
 
 Contact us if you have any problem!
