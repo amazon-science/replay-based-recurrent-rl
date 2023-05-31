@@ -1,0 +1,38 @@
+!!python/object:argparse.Namespace
+
+## debugging Quadratic_opt
+# env_name: Quadratic_opt
+# obs_dim: 10
+# nb_tasks: 20
+
+## debugging Continual-World
+env_name: CW10
+nb_tasks: 10
+monitor_success: True
+
+# lr: 0.0003
+# batch_size: 128
+total_timesteps: 1_000
+replay_size: 500
+max_episode_steps: 100
+eval_freq: 500
+log_freq: 20
+save_freq: 1_000_000
+burn_in: 20
+warm_up: 10
+num_evals: 1
+batch_size: 2
+log_id: debug
+# wandb_project: debug
+hidden_dim: 10
+num_hidden_layers: 2
+context_dim: 30
+# tx_token_emb: True
+tx_token_emb: False
+# tx_pos_enc: sinusoidal
+tx_pos_enc: learned
+tx_nb_heads: 2
+history_length: 3
+# multi_head: False 
+curr_task_sampl_prob: 0.8
+use_auto_entropy: True
