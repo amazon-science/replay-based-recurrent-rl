@@ -250,6 +250,10 @@ def overwrite_args(args, config_type, config):
     """
     with open(f"code/configs/{config_type}/{config}.yaml") as f:
         file_args = yaml.load(f, Loader=yaml.FullLoader)
+
+    with open(f"code/configs/{config_type}/{config}.yaml") as f:
+        file_args = yaml.safe_load(f, Loader=yaml.FullLoader)
+
         # overwrite the default values with the values from the file.
         args_dict = vars(args)
         file_args_dict = vars(file_args)
