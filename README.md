@@ -37,7 +37,7 @@ The baselines, including replay-based recurrent RL (3RL) and ER-TX, are modular 
 If you have found the paper or codebase useful, consider citing the work:
 ```
 @article{caccia2022task,
-  title={Task-Agnostic Continual Reinforcement Learning: In Praise of a Simple Baseline},
+  title={Task-Agnostic Continual Reinforcement Learning: Gaining Insights and Overcoming Challenges},
   author={Caccia, Massimo and Mueller, Jonas and Kim, Taesup and Charlin, Laurent and Fakoor, Rasool},
   journal={arXiv preprint arXiv:2205.14495},
   year={2022}
