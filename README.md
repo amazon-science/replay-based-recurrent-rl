@@ -30,9 +30,9 @@
 
 ## About The Project
 
-Official codebase for the paper [Task-Agnostic Continual Reinforcement Learning: In Praise of a Simple Baseline](https://arxiv.org/abs/2205.14495). 
-The code can be useful to run continual RL (or multi-task RL) experiments in Meta-World (e.g. in Continual-World). 
-The baselines, including replay-based recurrent RL (3RL), are modular enough to be ported into another codebase as well.
+Official codebase for the paper [Task-Agnostic Continual Reinforcement Learning: Gaining Insights and Overcoming Challenges](https://arxiv.org/abs/2205.14495). 
+The code can be useful to run continual RL (or multi-task RL) experiments in Meta-World (e.g. in Continual-World) as well as large-scale study in the synthetic benchmark Quadratic Optimization. 
+The baselines, including replay-based recurrent RL (3RL) and ER-TX, are modular enough to be ported into another codebase as well.
 
 If you have found the paper or codebase useful, consider citing the work:
 ```
@@ -69,15 +69,16 @@ If you have found the paper or codebase useful, consider citing the work:
             ├── buffer.py                # sampling data from buffer
             ├── runner_offpolicy.py      # agent sampling data from the env
             ├── sequoia_envs.py          # creating the environemnts
-            ├── eval.py                  # evaluation script
             ├── utils.py
         ├── models
             ├── networks.py              # creates the neural networks
         ├── scripts
-            ├── analyse_reps.py          # analyse the RNN representations
-            ├── test_codebase_cl.py      # makes sures the repo runs correctly
-        ├── main_cl.py                   # main file for CRL experiments
-        ├── main_mtl.py                  # main file for MTRL experiments 
+            ├── test_codebase.py         # makes sures the repo runs correctly
+        ├── train_and_eval
+            ├── eval.py                  # evaluation logig
+            ├── train_cl.py              # training logic in CL
+            ├── train_mtl.py             # training logic in MTL
+        ├── main.py                      # main file for CRL experiments
     ├── public_ck                  
         ├── ...                          # checkpoints in CW10 benchmark
 
@@ -109,7 +110,7 @@ pip install "sequoia[metaworld] @ git+https://www.github.com/lebrice/Sequoia.git
 
 3. extra requirements
 ```bash
-pip install -r extra_requirements.txt
+pip install -r requirements.txt
 ```
 
 4. install mujoco + mujoco key 
@@ -131,28 +132,35 @@ Contact us if you have any problem!
 
 ## Usage
 
+
+
 example of running SAC w/ an RNN in CW10
 ```python
-python code/main_cl.py --context_rnn True --env_name CW10 --lr 0.0003 --batch_size 1028
+python code/main.py --train_mode cl --context_rnn True --setting_config CW10 --lr 0.0003 --batch_size 1028
 ```
+or w/ a transformer in Quadratic Optimization in a multi-task regime
+```python
+python code/main.py --train_mode mtl --context_transformer True --env_name Quadratic_opt --lr 0.0003 --batch_size 128
+```
+
 
 You can pass config files and reproduce the paper's results by combining a `setting`, `method` and `hyperparameters` config file in the following manner
 ```python
-python code/main_cl.py --setting_config <setting> --method_config <method> --hparam_config <hyperparameters>
+python code/main.py --train_mode <cl, mtl> --setting_config <setting> --method_config <method> --hparam_config <hyperparameters>
 ```
 e.g. running `3RL` in `CW10` w/ the hyperparameter prescribed by Meta-World (for Meta-world v2):
 ```python
-python code/main_cl.py --setting_config CW10 --method_config 3RL --hparam_config meta_world
+python code/main.py --train_mode cl --setting_config CW10 --method_config 3RL --hparam_config meta_world
 ```
 
 For the MTRL experiments, run 
 ```python
-python code/main_mtl.py
+python code/main.py --train_mode mtl
 ```
 
 for prototyping, you can use the `ant_direction` environment:
 ``` python
-python code/main_cl.py --env_name Ant_direction-v3
+python code/main.py --env_name Ant_direction-v3
 ```
 
 ### Paper reproduction
@@ -161,14 +169,26 @@ For access to the [WandB](https://wandb.ai/site) project w/ the results, please 
 
 For Figure 1, use `analyse_reps.py` (the models are in `public_ck`)
 
-For Figure 2 
-```python
-python main_cl.py --setting_config <CW10, CL_MW20_500k>  --method_config <method> --hparam_config meta_world
+For all synthetic data experiments, you can create a `wandb sweep`
+```bash
+wandb sweep --project Quadratic_opt code/configs/sweeps/Quadratic_opt.yaml
+```
+And then launch the `wandb agent`
+```bash
+wandb agent <sweep_id>
 ```
 
-For Figure 3 
+
+
+
+For Figure 5 
 ```python
-python main_mtl.py --setting_config MTL_MW20  --method_config <method> --hparam_config meta_world-noet
+python main.py --train_mode cl --setting_config <CW10, CL_MW20_500k>  --method_config <method> --hparam_config meta_world
+```
+
+For Figure 7 
+```python
+python main.py --train_mode mtl --setting_config MTL_MW20  --method_config <method> --hparam_config meta_world-noet
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

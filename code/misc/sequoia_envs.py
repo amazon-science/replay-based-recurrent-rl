@@ -7,15 +7,9 @@ from gym.wrappers import TimeLimit
 
 EnvFn = Callable[[], gym.Env]
 
-class MetaDataWrapper(gym.Wrapper):
-    def __init__(self, env, task_id, nb_tasks, max_episode_steps):
-        super(MetaDataWrapper, self).__init__(env)
-        self.task_id = task_id
-        self.nb_tasks = nb_tasks
-        self._max_episode_steps = max_episode_steps
-
 class SuccessCounter(gym.Wrapper):
     """From Continual World's Codebase"""
+
     def __init__(self, env):
         super().__init__(env)
         self.successes = []
@@ -23,7 +17,7 @@ class SuccessCounter(gym.Wrapper):
 
     def step(self, action):
         obs, reward, done, info = self.env.step(action)
-        if info.get('success', False):
+        if info.get("success", False):
             self.current_success = True
         if done:
             self.successes.append(self.current_success)
@@ -39,64 +33,42 @@ class SuccessCounter(gym.Wrapper):
         return self.env.reset(**kwargs)
 
 
-def create_env(
-    env: gym.Env,
-    kwargs: Dict = None,
-    wrappers: List[Callable[[gym.Env], gym.Env]] = None,
-    seed: int = None,
-) -> gym.Env:
-    """
-    1. Create an env instance by calling `env_fn`;
-    2. Wrap it with the wrappers in `wrappers`, if any;
-    3. seed it with `seed` if it is not None.
-    """
-    wrappers = wrappers or []
-    for wrapper in wrappers:
-        env = wrapper(env)
-    if seed is not None:
-        env.seed(seed)
-    return env
-
-
 def get_envs(
     env_name: str,
     nb_tasks: int = 20,
     max_episode_steps: int = 1000,
     train_seed: int = 123,
-    eparams = None,
+    eparams=None,
 ) -> List[EnvFn]:
-    
     from sequoia.settings.rl.incremental.setting import IncrementalRLSetting
+
     setting = IncrementalRLSetting(
-        dataset=env_name,
-        max_episode_steps=max_episode_steps,
-        nb_tasks=nb_tasks,
-)
-    
+        dataset=env_name, max_episode_steps=max_episode_steps, nb_tasks=nb_tasks,
+    )
+
     train_envs: List[gym.Env] = []
 
     task_order = range(nb_tasks)
-    
+
     for task_id in task_order:
 
-        print(task_id)
-
         # Function that will create the env with the given task.
-        if nb_tasks==1:
-            task_id=eparams.single_task_id
-            print(f'========= single task on task {task_id} ==============')
+        if nb_tasks == 1:
+            task_id = eparams.single_task_id
+            print(f"========= single task on task {task_id} ==============")
 
-        base_env_fn = setting.train_envs[task_id]()
+        base_env_fn = setting.train_envs[task_id]
+        env = base_env_fn()
+        env = TimeLimit(env, max_episode_steps=max_episode_steps)
 
-        wrappers = []
-        wrappers += [partial(TimeLimit, max_episode_steps=max_episode_steps)]
         if eparams.monitor_success:
-            wrappers += [SuccessCounter]
-        wrappers += [partial(MetaDataWrapper, task_id=task_id,
-                                              nb_tasks=nb_tasks,
-                                              max_episode_steps=max_episode_steps)]
+            env = SuccessCounter(env)
+        if train_seed is not None:
+            env.seed(train_seed)
+        
+        # Add metadata to env
+        env.task_id = task_id
+        env.nb_tasks = nb_tasks
+        train_envs.append(env)
 
-        train_env = partial(create_env, base_env_fn, wrappers=wrappers, seed=train_seed)()
-        train_envs.append(train_env)
-    
     return train_envs

@@ -1,5 +1,6 @@
 !!python/object:argparse.Namespace
-env_name: Ant_direction-v3
+env_name: Quadratic_opt
+obs_dim: 2
 nb_tasks: 3
 total_timesteps: 1_000
 replay_size: 500
@@ -12,9 +13,8 @@ warm_up: 10
 num_evals: 2
 batch_size: 2
 log_id: test
-actor_hidden_sizes: [3, 5]
-critic_hidden_sizes: [3, 5]
-hiddens_context: [3, 3]
+hidden_dim: 10
+context_dim: 8
 history_length: 3
 curr_task_sampl_prob: 0.5
 use_auto_entropy: True
