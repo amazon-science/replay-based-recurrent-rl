@@ -163,6 +163,8 @@ for prototyping, you can use the `ant_direction` environment:
 python code/main.py --env_name Ant_direction-v3
 ```
 
+Note: If you get an error about "yaml.safe_load", replace it with "yaml.load()".
+
 ### Paper reproduction
 
 For access to the [WandB](https://wandb.ai/site) project w/ the results, please contact me. 
